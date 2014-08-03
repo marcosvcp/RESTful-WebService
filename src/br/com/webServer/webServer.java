@@ -143,7 +143,7 @@ public class WebServer {
 	 * Método HEAD para o GET de todos os comentários pelo {@code id} do post
 	 */
 	@HEAD
-	@Path("/{id}/comment}")
+	@Path("/{id}/comment")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response getHeadCommentsByPostId(@PathParam("id") String id) {
 		Post p = searchPostById(id);
