@@ -2,11 +2,11 @@
 <metadata>
   <groupId>org.apache.tomcat.embed</groupId>
   <artifactId>tomcat-embed-core</artifactId>
+  <version>7.0.34</version>
   <versioning>
-    <release>7.0.34</release>
     <versions>
       <version>7.0.34</version>
     </versions>
-    <lastUpdated>20140804000601</lastUpdated>
+    <lastUpdated>20140806005503</lastUpdated>
   </versioning>
 </metadata>

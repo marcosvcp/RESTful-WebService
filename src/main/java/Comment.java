@@ -1,4 +1,4 @@
-package br.com.webServer;
+package main.java;
 
 public class Comment {
 

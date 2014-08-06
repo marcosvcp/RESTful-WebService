@@ -1,4 +1,4 @@
-package br.com.webServer;
+package main.java;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
- * Web Service simples de posts e coment·rios
+ * Web Service simples de posts e coment√°rios
  */
 @Path("/post")
 public class WebServer {
@@ -31,9 +31,9 @@ public class WebServer {
 	private String json;
 	ObjectMapper mapper = new ObjectMapper();
 
-	// Recurso: post (coleÁ„o)
+	// Recurso: post (cole√ß√£o)
 	/**
-	 * MÈtodo HEAD para o GET de todos os posts
+	 * M√©todo HEAD para o GET de todos os posts
 	 */
 	@HEAD
 	@Produces(MediaType.TEXT_PLAIN)
@@ -44,7 +44,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo GET para todos os Posts
+	 * M√©todo GET para todos os Posts
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -58,7 +58,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodos POST para postar um novo post com uma {@code msg}
+	 * M√©todos POST para postar um novo post com uma {@code msg}
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ public class WebServer {
 	// Recurso: post (entidade individual)
 
 	/**
-	 * MÈtodo DELETE para um post com o {@code id}.
+	 * M√©todo DELETE para um post com o {@code id}.
 	 */
 	@DELETE
 	@Path("/{id}")
@@ -87,7 +87,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo PUT que modifica o conte˙do de um post a partir de seu {@code id},
+	 * M√©todo PUT que modifica o conte√∫do de um post a partir de seu {@code id},
 	 * com uma {@code msg}.
 	 */
 	@PUT
@@ -103,7 +103,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo GET de um ˙nico post apartir de seu {@code id}.
+	 * M√©todo GET de um √∫nico post apartir de seu {@code id}.
 	 */
 	@GET
 	@Path("/{id}")
@@ -122,7 +122,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo HEAD para o GET de um post pelo {@code id}
+	 * M√©todo HEAD para o GET de um post pelo {@code id}
 	 */
 	@HEAD
 	@Path("/{id}")
@@ -137,10 +137,10 @@ public class WebServer {
 				.header("Content-Length", p.toString().length()).build();
 	}
 
-	// Recurso: comment (coleÁ„o)
+	// Recurso: comment (cole√ß√£o)
 
 	/**
-	 * MÈtodo HEAD para o GET de todos os coment·rios pelo {@code id} do post
+	 * M√©todo HEAD para o GET de todos os coment√°rios pelo {@code id} do post
 	 */
 	@HEAD
 	@Path("/{id}/comment")
@@ -157,7 +157,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo GET de todos os coment·rios a partir do {@code id} do post.
+	 * M√©todo GET de todos os coment√°rios a partir do {@code id} do post.
 	 */
 	@GET
 	@Path("/{id}/comment")
@@ -176,7 +176,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo POST de um novo coment·rio com uma {@code msg}, em um post com o
+	 * M√©todo POST de um novo coment√°rio com uma {@code msg}, em um post com o
 	 * {@code id}
 	 */
 	@POST
@@ -191,7 +191,7 @@ public class WebServer {
 
 	// Recurso: comment (entidade)
 	/**
-	 * MÈtodo HEAD para o GET de um coment·rio pelo {@code id} do post e o
+	 * M√©todo HEAD para o GET de um coment√°rio pelo {@code id} do post e o
 	 * {@code idComment}.
 	 */
 	@HEAD
@@ -221,7 +221,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo GET de um coment·rio especifico de numeraÁ„o {@code sequence} no
+	 * M√©todo GET de um coment√°rio especifico de numera√ß√£o {@code sequence} no
 	 * post com {@code id}.
 	 */
 	@GET
@@ -243,7 +243,7 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo DELETE de um coment·rio especifico de numeraÁ„o {@code sequence}
+	 * M√©todo DELETE de um coment√°rio especifico de numera√ß√£o {@code sequence}
 	 * no post com o {@code id}.
 	 */
 	@DELETE
@@ -259,8 +259,8 @@ public class WebServer {
 	}
 
 	/**
-	 * MÈtodo PUT de um coment·rio, modificando a {@code msg} do mesmo no post
-	 * que tem como {@code id} e o coment·rio sequenciado por {@code sequence}.
+	 * M√©todo PUT de um coment√°rio, modificando a {@code msg} do mesmo no post
+	 * que tem como {@code id} e o coment√°rio sequenciado por {@code sequence}.
 	 */
 	@PUT
 	@Path("/{id}/comment/{sequence}")

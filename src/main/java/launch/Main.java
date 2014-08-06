@@ -1,12 +1,11 @@
-package launch;
+package main.java.launch;
 
 import java.io.File;
 import org.apache.catalina.startup.Tomcat;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-
-		String webappDirLocation = "src/main/webapp/";
+		String webappDirLocation = "src/main/";
 		Tomcat tomcat = new Tomcat();
 
 		// The port that we should run on can be set into an environment

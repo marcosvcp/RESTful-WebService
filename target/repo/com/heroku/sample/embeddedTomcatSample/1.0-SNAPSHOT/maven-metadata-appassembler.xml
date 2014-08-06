@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metadata modelVersion="1.1.0">
+<metadata>
   <groupId>com.heroku.sample</groupId>
   <artifactId>embeddedTomcatSample</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -7,13 +7,6 @@
     <snapshot>
       <localCopy>true</localCopy>
     </snapshot>
-    <lastUpdated>20140804000601</lastUpdated>
-    <snapshotVersions>
-      <snapshotVersion>
-        <extension>jar</extension>
-        <value>1.0-SNAPSHOT</value>
-        <updated>20140804000601</updated>
-      </snapshotVersion>
-    </snapshotVersions>
+    <lastUpdated>20140806005503</lastUpdated>
   </versioning>
 </metadata>
