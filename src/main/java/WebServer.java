@@ -212,9 +212,15 @@ public class WebServer {
 	}
 
 	private Post searchPostById(String id) {
-		Post post = posts.stream().filter(p -> p.getId().toString().equals(id))
-				.findFirst().get();
-		return post;
+		// Post post = posts.stream().filter(p ->
+		// p.getId().toString().equals(id))
+		// .findFirst().get();
+		for (Post p : posts) {
+			if (p.getId().toString().equals(id)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	/**
