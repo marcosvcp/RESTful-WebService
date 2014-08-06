@@ -24,12 +24,12 @@ public class Index {
 	@Path("/post")
 	@Produces(MediaType.TEXT_HTML)
 	public Response index() {
-		try {
-			WebService.posts = Arrays.asList(WebService.mapper.readValue(
-					new FileReader(new File(WebService.FILE)), Post[].class));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// WebService.posts = Arrays.asList(WebService.mapper.readValue(
+		// new FileReader(new File(WebService.FILE)), Post[].class));
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 		return Response.ok().entity(indexHTML).build();
 	}
 

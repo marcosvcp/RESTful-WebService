@@ -35,12 +35,12 @@ public class WebService {
 	public static final String FILE = "posts.json";
 
 	public void persist() {
-		FileWriter fw;
-		try {
-			fw = new FileWriter(new File(FILE));
-			fw.write(mapper.writeValueAsString(posts));
-		} catch (IOException e1) {
-		}
+		// FileWriter fw;
+		// try {
+		// fw = new FileWriter(new File(FILE));
+		// fw.write(mapper.writeValueAsString(posts));
+		// } catch (IOException e1) {
+		// }
 	}
 
 	// Recurso: post (coleção)
