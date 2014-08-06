@@ -1,5 +1,7 @@
 package main.java;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,17 @@ public class WebService {
 	public static int sequencepost;
 	public static List<Post> posts = new ArrayList<Post>();
 	private String json;
-	ObjectMapper mapper = new ObjectMapper();
+	public static ObjectMapper mapper = new ObjectMapper();
+	public static final String FILE = "posts.json";
+
+	public void persist() {
+		FileWriter fw;
+		try {
+			fw = new FileWriter(new File(FILE));
+			fw.write(mapper.writeValueAsString(posts));
+		} catch (IOException e1) {
+		}
+	}
 
 	// Recurso: post (coleção)
 	/**
@@ -67,6 +79,7 @@ public class WebService {
 		sequencepost++;
 		newPost.setId(sequencepost);
 		posts.add(newPost);
+		persist();
 		return Response.status(200).build();
 	}
 
@@ -83,6 +96,7 @@ public class WebService {
 			return Response.status(404).build();
 		}
 		posts.remove(p);
+		persist();
 		return Response.status(200).build();
 	}
 
@@ -99,6 +113,7 @@ public class WebService {
 			return Response.status(404).build();
 		}
 		p.setMsg(msg);
+		persist();
 		return Response.status(200).build();
 	}
 
@@ -186,6 +201,7 @@ public class WebService {
 			@FormParam("msg") String msg) {
 		Post p = searchPostById(id);
 		p.addComment(msg);
+		persist();
 		return Response.status(200).build();
 	}
 
@@ -258,6 +274,7 @@ public class WebService {
 			return Response.status(404).build();
 		}
 		p.removeComment(sequence);
+		persist();
 		return Response.status(200).build();
 	}
 
@@ -275,6 +292,7 @@ public class WebService {
 			return Response.status(404).build();
 		}
 		p.getComment(sequence).setMsg(msg);
+		persist();
 		return Response.status(200).build();
 	}
 }
