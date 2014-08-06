@@ -29,8 +29,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class WebService {
 
 	public static int sequencepost;
-	public static List<Post> posts = new ArrayList<Post>();
 	private String json;
+	public static List<Post> posts = new ArrayList<Post>();
 	public static ObjectMapper mapper = new ObjectMapper();
 	public static final String FILE = "posts.json";
 

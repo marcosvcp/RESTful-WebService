@@ -14,12 +14,14 @@ import javax.ws.rs.core.Response;
 /**
 *
 */
-@Path("/")
+@Path("/espec")
 public class Index {
 
-	private String indexHTML = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><!doctype html><html><head></head><body><h1>(REST POST API Spec)</h1><h3>Recursos, URIs e métodos disponíveis </h3><h4>Recurso: post (coleção)</h4><ul><li><code>HEAD /post</code></li><li><code>POST /post</code></li><ul><li><code>PARAMETRO msg</code></li></ul><li><code>GET /post</code></li></ul><h4>Recurso: post (entidade individual)</h4><ul><li><code>GET /post/:id</code></li><li><code>HEAD /post/:id</code></li><li><code>PUT /post/:id</code></li><ul><li><code>PARAMETRO novaMsg</code></li></ul><li><code>DELETE /post/:id</code></li></ul><h4>Recurso: comment (coleção)</h4><ul><li><code>HEAD /post/:id/comment</code></li><li><code>GET /post/:id/comment</code></li><li><code>POST /post/:id/comment</code></li><ul><li><code>PARAMETRO msg</code></li></ul></ul><h4>Recurso: comment (entidade)</h4><ul><li><code>GET /post/:id/comment/:id</code></li><li><code>HEAD /post/:id/comment/:id</code></li><li><code>DELETE /post/:id/comment/:id</code></li><li><code>PUT /post/:id/comment/:id</code></li><ul><li><code>PARAMETRO novaMsg</code></li></ul></ul></body></html>";
+	private String indexHTML = "<!doctype html><html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><head></head><body><h1>(REST POST API Spec)</h1><h3>Recursos, URIs e métodos disponíveis </h3><h4>Recurso: post (coleção)</h4><ul><li><code>HEAD /post</code></li><li><code>POST /post</code></li><ul><li><code>PARAMETRO msg</code></li></ul><li><code>GET /post</code></li></ul><h4>Recurso: post (entidade individual)</h4><ul><li><code>GET /post/:id</code></li><li><code>HEAD /post/:id</code></li><li><code>PUT /post/:id</code></li><ul><li><code>PARAMETRO novaMsg</code></li></ul><li><code>DELETE /post/:id</code></li></ul><h4>Recurso: comment (coleção)</h4><ul><li><code>HEAD /post/:id/comment</code></li><li><code>GET /post/:id/comment</code></li><li><code>POST /post/:id/comment</code></li><ul><li><code>PARAMETRO msg</code></li></ul></ul><h4>Recurso: comment (entidade)</h4><ul><li><code>GET /post/:id/comment/:id</code></li><li><code>HEAD /post/:id/comment/:id</code></li><li><code>DELETE /post/:id/comment/:id</code></li><li><code>PUT /post/:id/comment/:id</code></li><ul><li><code>PARAMETRO novaMsg</code></li></ul></ul></body></html>";
+	private String indexTODOHTML = "<!doctype html><html><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><head></head><body><h1>(TODO API Spec)</h1><h3>Recursos, URIs e métodos disponíveis</h3><h4>Recurso: Task (coleção)</h4><ul><li><code>HEAD /task</code></li><li><code>POST /task</code></li><ul><li><code>PARAMETRO title</code></li></ul><li><code>GET /task</code></li></ul><h4>Recurso: Task (entidade individual)</h4><ul><li><code>GET /task/:id</code></li><li><code>HEAD /task/:id</code></li><li><code>PUT /task/:id</code></li><ul><li><code>PARAMETRO newTitle</code></li></ul><li><code>DELETE /task/:id</code></li></ul></body></html>";
 
 	@GET
+	@Path("/post")
 	@Produces(MediaType.TEXT_HTML)
 	public Response index() {
 		try {
@@ -29,5 +31,12 @@ public class Index {
 			e.printStackTrace();
 		}
 		return Response.ok().entity(indexHTML).build();
+	}
+
+	@GET
+	@Path("/todolist")
+	@Produces(MediaType.TEXT_HTML)
+	public Response indexTODO() {
+		return Response.ok().entity(indexTODOHTML).build();
 	}
 }
