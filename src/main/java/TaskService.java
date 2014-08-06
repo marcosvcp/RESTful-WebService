@@ -24,14 +24,14 @@ import javax.ws.rs.core.Response.Status;
 @Path("/task")
 public class TaskService {
 	public static int sequenceTask;
-	private List<Task> tasks = new ArrayList<Task>();
+	public static List<Task> tasks = new ArrayList<Task>();
 
 	/**
 	 * Método HEAD para o GET de todos as tasks
 	 */
 	@HEAD
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getHeadPost() {
+	public Response getHeadTask() {
 		return Response.ok().status(200)
 				.header("Content-Type", "application/json")
 				.header("Content-Length", tasks.toString().length()).build();
@@ -42,7 +42,7 @@ public class TaskService {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllPosts() {
+	public Response getAllTasks() {
 		try {
 			String json = WebService.mapper.writeValueAsString(tasks);
 			return Response.status(200).entity(json).build();
@@ -56,7 +56,7 @@ public class TaskService {
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPost(@FormParam("title") String title) {
+	public Response createTask(@FormParam("title") String title) {
 		Task newTask = new Task(title);
 		sequenceTask++;
 		newTask.setSequencial(sequenceTask);
@@ -78,7 +78,7 @@ public class TaskService {
 	 */
 	@DELETE
 	@Path("/{id}")
-	public Response removePost(@PathParam("id") String id) {
+	public Response removeTask(@PathParam("id") String id) {
 		Task t = searchTaskById(id);
 		if (t == null) {
 			return Response.status(404).build();
@@ -93,7 +93,7 @@ public class TaskService {
 	 */
 	@PUT
 	@Path("/{id}")
-	public Response editPost(@PathParam("id") String id,
+	public Response editTask(@PathParam("id") String id,
 			@FormParam("newTitle") String title) {
 		Task t = searchTaskById(id);
 		if (t == null) {
@@ -109,7 +109,7 @@ public class TaskService {
 	@GET
 	@Path("/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
-	public Response getPost(@PathParam("id") String id) {
+	public Response getTask(@PathParam("id") String id) {
 		Task t = searchTaskById(id);
 		if (t == null) {
 			return Response.status(404).build();
@@ -128,7 +128,7 @@ public class TaskService {
 	@HEAD
 	@Path("/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getHeadByPostId(@PathParam("id") String id) {
+	public Response getHeadByTaskId(@PathParam("id") String id) {
 		Task t = searchTaskById(id);
 		if (t == null) {
 			return Response.status(404).build();
