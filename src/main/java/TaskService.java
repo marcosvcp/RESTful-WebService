@@ -81,7 +81,7 @@ public class TaskService {
 	public Response removeTask(@PathParam("id") String id) {
 		Task t = searchTaskById(id);
 		if (t == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		tasks.remove(t);
 		return Response.status(200).build();
@@ -97,7 +97,7 @@ public class TaskService {
 			@FormParam("newTitle") String title) {
 		Task t = searchTaskById(id);
 		if (t == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		t.setTitle(title);
 		return Response.status(200).build();
@@ -112,7 +112,7 @@ public class TaskService {
 	public Response getTask(@PathParam("id") String id) {
 		Task t = searchTaskById(id);
 		if (t == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		try {
 			return Response.status(200)
@@ -131,7 +131,7 @@ public class TaskService {
 	public Response getHeadByTaskId(@PathParam("id") String id) {
 		Task t = searchTaskById(id);
 		if (t == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		return Response.ok().status(200)
 				.header("Content-Type", "application/json")

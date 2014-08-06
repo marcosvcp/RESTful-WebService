@@ -93,7 +93,7 @@ public class WebService {
 	public Response removePost(@PathParam("id") String id) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		posts.remove(p);
 		persist();
@@ -110,7 +110,7 @@ public class WebService {
 			@FormParam("novaMsg") String msg) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		p.setMsg(msg);
 		persist();
@@ -126,7 +126,7 @@ public class WebService {
 	public Response getPost(@PathParam("id") String id) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		try {
 			return Response.status(200).entity(mapper.writeValueAsString(p))
@@ -163,7 +163,7 @@ public class WebService {
 	public Response getHeadCommentsByPostId(@PathParam("id") String id) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		return Response.ok().status(200)
 				.header("Content-Type", "application/json")
@@ -180,7 +180,7 @@ public class WebService {
 	public Response getCommentsById(@PathParam("id") String id) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		try {
 			return Response.status(200)
@@ -217,7 +217,7 @@ public class WebService {
 			@PathParam("sequence") String idComment) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		return Response
 				.ok()
@@ -250,7 +250,7 @@ public class WebService {
 			@PathParam("sequence") String sequence) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		try {
 			return Response.status(200)
@@ -271,7 +271,7 @@ public class WebService {
 			@PathParam("sequence") String sequence) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		p.removeComment(sequence);
 		persist();
@@ -289,7 +289,7 @@ public class WebService {
 			@FormParam("novaMsg") String msg) {
 		Post p = searchPostById(id);
 		if (p == null) {
-			return Response.status(404).build();
+			return Response.serverError().status(404).build();
 		}
 		p.getComment(sequence).setMsg(msg);
 		persist();
