@@ -4,10 +4,12 @@ public class Comment {
 
 	private Integer sequence;
 	private String msg;
+	private String author;
 
-	public Comment(String msg, Integer sequence) {
+	public Comment(String msg, Integer sequence, String author) {
 		this.setMsg(msg);
 		this.sequence = sequence;
+		this.author = author;
 	}
 
 	public String getMsg() {
@@ -28,6 +30,15 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment N: " + sequence + "\n Message : " + this.msg;
+		return "<li>" + "\n" + this.msg + "\n</br><b>Author: " + this.author
+				+ "</b></br></li>";
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 }

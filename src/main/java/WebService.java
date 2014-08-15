@@ -1,10 +1,10 @@
 package main.java;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -22,6 +22,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.sun.jersey.api.view.Viewable;
+
 /**
  * Web Service simples de posts e comentários
  */
@@ -34,25 +36,27 @@ public class WebService {
 	public static ObjectMapper mapper = new ObjectMapper();
 	public static final String FILE = "posts.json";
 
-	public void persist() {
-		// FileWriter fw;
-		// try {
-		// fw = new FileWriter(new File(FILE));
-		// fw.write(mapper.writeValueAsString(posts));
-		// } catch (IOException e1) {
-		// }
-	}
-
 	// Recurso: post (coleção)
 	/**
 	 * Método HEAD para o GET de todos os posts
 	 */
 	@HEAD
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 	public Response getHeadPost() {
-		return Response.ok().status(200)
-				.header("Content-Type", "application/json")
-				.header("Content-Length", posts.toString().length()).build();
+		Map<String, String> atrr = new HashMap<String, String>();
+		atrr.put("numPosts", String.valueOf(posts.size()));
+		try {
+			return Response
+					.ok()
+					.status(200)
+					.header("Content-Length",
+							mapper.writeValueAsBytes(posts).length)
+					.entity(mapper.writeValueAsString(atrr))
+					.header("Content-Type", "application/json").build();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -70,16 +74,27 @@ public class WebService {
 	}
 
 	/**
+	 * Método GET para todos os Posts
+	 */
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public Response getAllPostsHTML() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("posts", posts.toString().replaceAll("\\[|\\,|\\]", ""));
+		return Response.ok(new Viewable("/posts", map)).build();
+	}
+
+	/**
 	 * Métodos POST para postar um novo post com uma {@code msg}
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPost(@FormParam("msg") String msg) {
-		Post newPost = new Post(msg);
+	public Response createPost(@FormParam("msg") String msg,
+			@FormParam("author") String author) {
+		Post newPost = new Post(msg, author);
 		sequencepost++;
 		newPost.setId(sequencepost);
 		posts.add(newPost);
-		persist();
 		return Response.status(200).build();
 	}
 
@@ -96,7 +111,6 @@ public class WebService {
 			return Response.serverError().status(404).build();
 		}
 		posts.remove(p);
-		persist();
 		return Response.status(200).build();
 	}
 
@@ -113,7 +127,6 @@ public class WebService {
 			return Response.serverError().status(404).build();
 		}
 		p.setMsg(msg);
-		persist();
 		return Response.status(200).build();
 	}
 
@@ -141,15 +154,23 @@ public class WebService {
 	 */
 	@HEAD
 	@Path("/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 	public Response getHeadByPostId(@PathParam("id") String id) {
 		Post p = searchPostById(id);
 		if (p == null) {
 			return Response.status(404).build();
 		}
-		return Response.ok().status(200)
-				.header("Content-Type", "application/json")
-				.header("Content-Length", p.toString().length()).build();
+		try {
+			return Response
+					.ok()
+					.status(200)
+					.header("Content-Type", "application/json")
+					.header("Content-Length",
+							mapper.writeValueAsBytes(p).length).build();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// Recurso: comment (coleção)
@@ -159,16 +180,24 @@ public class WebService {
 	 */
 	@HEAD
 	@Path("/{id}/comment")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 	public Response getHeadCommentsByPostId(@PathParam("id") String id) {
 		Post p = searchPostById(id);
 		if (p == null) {
 			return Response.serverError().status(404).build();
 		}
-		return Response.ok().status(200)
-				.header("Content-Type", "application/json")
-				.header("Content-Length", p.getComments().toString().length())
-				.build();
+		try {
+			return Response
+					.ok()
+					.status(200)
+					.header("Content-Type", "application/json")
+					.header("Content-Length",
+							mapper.writeValueAsBytes(p.getComments()).length)
+					.build();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -198,10 +227,9 @@ public class WebService {
 	@Path("/{id}/comment")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createComment(@PathParam("id") String id,
-			@FormParam("msg") String msg) {
+			@FormParam("msg") String msg, @FormParam("author") String author) {
 		Post p = searchPostById(id);
-		p.addComment(msg);
-		persist();
+		p.addComment(msg, author);
 		return Response.status(200).build();
 	}
 
@@ -212,19 +240,25 @@ public class WebService {
 	 */
 	@HEAD
 	@Path("/{id}/comment/{sequence}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 	public Response getHeadCommentByPostId(@PathParam("id") String id,
 			@PathParam("sequence") String idComment) {
 		Post p = searchPostById(id);
 		if (p == null) {
 			return Response.serverError().status(404).build();
 		}
-		return Response
-				.ok()
-				.status(200)
-				.header("Content-Type", "application/json")
-				.header("Content-Length",
-						p.getComment(idComment).toString().length()).build();
+		try {
+			return Response
+					.ok()
+					.status(200)
+					.header("Content-Type", "application/json")
+					.header("Content-Length",
+							mapper.writeValueAsBytes(p.getComment(idComment)).length)
+					.build();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private Post searchPostById(String id) {
@@ -274,7 +308,6 @@ public class WebService {
 			return Response.serverError().status(404).build();
 		}
 		p.removeComment(sequence);
-		persist();
 		return Response.status(200).build();
 	}
 
@@ -292,7 +325,6 @@ public class WebService {
 			return Response.serverError().status(404).build();
 		}
 		p.getComment(sequence).setMsg(msg);
-		persist();
 		return Response.status(200).build();
 	}
 }

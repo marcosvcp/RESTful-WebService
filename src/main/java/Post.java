@@ -8,10 +8,12 @@ public class Post {
 	private Integer id;
 	private String msg;
 	private List<Comment> comments;
+	private String author;
 
-	public Post(String msg) {
+	public Post(String msg, String author) {
 		this.comments = new ArrayList<Comment>();
 		this.msg = msg;
+		this.author = author;
 	}
 
 	public String getMsg() {
@@ -22,8 +24,8 @@ public class Post {
 		this.msg = msg;
 	}
 
-	public void addComment(String msg) {
-		this.comments.add(new Comment(msg, this.comments.size() + 1));
+	public void addComment(String msg, String author) {
+		this.comments.add(new Comment(msg, this.comments.size() + 1, author));
 	}
 
 	public List<Comment> getComments() {
@@ -48,7 +50,8 @@ public class Post {
 			return false;
 		}
 		Post otherPost = (Post) obj;
-		return otherPost.getMsg().equals(this.msg);
+		return otherPost.getMsg().equals(this.msg)
+				&& otherPost.getAuthor().equals(this.getAuthor());
 	}
 
 	public Comment getComment(String sequence) {
@@ -67,6 +70,16 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post N: " + getId() + "\n Message: " + this.msg;
+		return "<li>" + "\n" + this.msg + "\n</br><b>Author: " + author
+				+ "</b></br>" + "<p><br><ul>" + getComments()
+				+ "</ul></p></li>";
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 }
